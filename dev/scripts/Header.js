@@ -4,7 +4,17 @@ export default class Header extends React.Component {
     render() {
         return (
             <div>
-                <h1 className="mainTitle">Tabber</h1>
+                <div>
+                    <ul className="mainNav">
+                        <li>Home</li>
+                        <li>Favourite Tabs</li>
+                        <li>Login</li>
+                    </ul>
+                </div>
+
+                <div className="mainTitle">
+                    <h1>Tabber</h1>
+                </div>
             </div>
         )
     }

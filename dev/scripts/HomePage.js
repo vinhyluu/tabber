@@ -26,7 +26,6 @@ class MainPage extends React.Component {
                 const songTitle = [];
                 const artistName = [];
                 const tabId = [];
-                const result =[];
 
                 console.log(artistName);
                 console.log(songTitle);
@@ -93,18 +92,22 @@ class MainPage extends React.Component {
     render(){
         return(
             <div>
-                <div className="wrapper">
-                    <header>
-                        <Header />
-                    </header>
-
+                <div className="wrapper headWrapper">
                     <div className="wrapper2">
+                        <header>
+                            <Header />
+                        </header>
+                    </div>
+                </div>
+
+                <div>
+                    <div>
                         <SearchTab search={this.handleSubmit} value={this.handleChange}/>
                     </div>
+                </div>
 
-                    <div>
-                        <SongInfo artist={this.state.artistName} title={this.state.songTitle} link={this.state.tabId}/>
-                    </div>
+                <div className="wrapper2 songContainer">
+                    <SongInfo artist={this.state.artistName} title={this.state.songTitle} link={this.state.tabId}/>
                 </div>
             </div>
         )
