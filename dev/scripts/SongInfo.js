@@ -1,5 +1,6 @@
 import React from "react";
-import firebase from './firebase';
+import firebase from "./firebase";
+import Favourites from "./FavouriteTabs";
 
 export default class SongInfo extends React.Component{
     constructor(){
@@ -22,7 +23,7 @@ export default class SongInfo extends React.Component{
             this.setState({
                 favourites: dataArray
             })
-            console.log(dataArray);
+            // console.log(dataArray);
         });
     }
 
@@ -56,6 +57,10 @@ export default class SongInfo extends React.Component{
         dbRef.push(fav);
     }
 
+    removeFavourite(noteId){
+        
+    }
+
 
 
     
@@ -72,30 +77,34 @@ export default class SongInfo extends React.Component{
 
     render() {
         return (
-            <div className="songContainerOuter">
-                {this.props.artist.map((artist, i) => {
-
-                    const { link, title } = this.props;
-
-                    return (
-                        <div className="songContainerInner" key={i}>
-                            <ul>
-                                <div className="leftSide">
-                                    <li>{artist}</li>
-                                </div>
-                                <div className="rightSide">
-                                    <div className="topRight">
-                                        <li>{title[i]}</li>
+            <div>
+                <div className="songContainerOuter">
+                    {this.props.artist.map((artist, i) => {
+                        const { link, title } = this.props;
+                        return (
+                            <div className="songContainerInner" key={i}>
+                                <ul>
+                                    <div className="leftSide">
+                                        <li>{artist}</li>
                                     </div>
-                                    <div className="bottomRight">
-                                        <li><a href={`${link[i]}`}><i className="fas fa-link"></i></a></li>
-                                        <li onClick={event => this.addFavourite(artist, i)}><i className="fas fa-plus"></i></li>
+                                    <div className="rightSide">
+                                        <div className="topRight">
+                                            <li>{title[i]}</li>
+                                        </div>
+                                        <div className="bottomRight">
+                                            <li><a href={`${link[i]}`}><i className="fas fa-link"></i></a></li>
+                                            <li onClick={event => this.addFavourite(artist, i)}><i className="fas fa-plus"></i></li>
+                                        </div>
                                     </div>
-                                </div>
-                            </ul>
-                        </div>
-                    )
-                })}
+                                </ul>
+                            </div>
+                        )
+                    })}
+                </div>
+
+                <div>
+                    <Favourites favourites={this.state.favourites}/>
+                </div>
             </div>
         )
     }
