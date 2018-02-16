@@ -9,40 +9,54 @@ export default class SongInfo extends React.Component{
         this.addFavourite = this.addFavourite.bind(this);
     }
 
-    addFavourite(e){
-        e.preventDefault();
-        console.log(this);
-        const favs ={
-            artist: this.artistName.textContent,
-            title: this.songTitle.textContent,
-            url: this.songUrl.textContent.outerHTML,
+    addFavourite(artist, songIndex) {
+        const fav = {
+            artist,
+            title: this.props.title[songIndex],
+            url: this.props.link[songIndex]
         };
+
         const newFavs = Array.from(this.state.favourites);
-        newFavs.push(favs);
+        newFavs.push(fav);
+
         this.setState({
             favourites: newFavs
+        },()=>{
+            console.log(this.state.favourites)
         })
-        console.log(this.state.favourites)
     }
+    
+    // addFavourite(e){
+    //     e.preventDefault();
+    //     const artist = document.getElementById("artistName").innerHTML;
+    //     console.log(artist);
+    //     const title = document.getElementById("titleSong").innerHTML;
+    //     console.log(title);
+    //     const url = document.getElementById("songUrl").getAttribute("href");
+    //     console.log(url);
+    // }
 
 
-    render(){
-        return(
+    render() {
+        return (
             <div className="songContainerOuter">
                 {this.props.artist.map((artist, i) => {
+
+                    const { link, title } = this.props;
+
                     return (
                         <div className="songContainerInner" key={i}>
                             <ul>
                                 <div className="leftSide">
-                                    <li ref={ref => this.artistName = ref}>{artist}</li>
+                                    <li>{artist}</li>
                                 </div>
                                 <div className="rightSide">
                                     <div className="topRight">
-                                        <li ref={ref => this.songTitle = ref}>{this.props.title[i]}</li>
+                                        <li>{title[i]}</li>
                                     </div>
                                     <div className="bottomRight">
-                                        <li ref={ref => this.songUrl = ref}><a href={`${this.props.link[i]}`}><i className="fas fa-link"></i></a></li>
-                                        <li onClick={this.addFavourite}><i className="fas fa-plus"></i></li>
+                                        <li><a href={`${link[i]}`}><i className="fas fa-link"></i></a></li>
+                                        <li onClick={event => this.addFavourite(artist, i)}><i className="fas fa-plus"></i></li>
                                     </div>
                                 </div>
                             </ul>

@@ -36,15 +36,17 @@ class MainPage extends React.Component {
 
                         const artist = tabs[key].artist.name.toUpperCase();
                         const song = tabs[key].title.toUpperCase();
-                        // const link = tabs[key].id;
+                        const link = `http://www.songsterr.com/a/wa/bestMatchForQueryString?s=${song}&a=${artist}`;
+                        const linkNoSpace = link.replace(/\s+/g, "");
 
+                        // console.log(linkNoSpace);
                         // console.log(link);
                         // console.log(song);
 
                         if(param == artist || param == song){
                             artistName.push(artist);
                             songTitle.push(song);
-                            tabId.push(`http://www.songsterr.com/a/wa/bestMatchForQueryString?s=${song}&a=${artist}`);
+                            tabId.push(linkNoSpace);
                             // tabId.push(`http://www.songsterr.com/a/wa/song?id=${link}`);
                             break;
                         }
