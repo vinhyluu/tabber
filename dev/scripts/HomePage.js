@@ -27,9 +27,9 @@ class MainPage extends React.Component {
                 const artistName = [];
                 const tabId = [];
 
-                console.log(artistName);
-                console.log(songTitle);
-                console.log(tabId);
+                // console.log(artistName);
+                // console.log(songTitle);
+                // console.log(tabId);
 
                 for(let key in tabs){
                     for(let data in tabs[key]){
@@ -107,7 +107,7 @@ class MainPage extends React.Component {
                 </div>
 
                 <div className="wrapper2 songContainer">
-                    <SongInfo artist={this.state.artistName} title={this.state.songTitle} link={this.state.tabId}/>
+                    <SongInfo artist={this.state.artistName} title={this.state.songTitle} link={this.state.tabId} />
                 </div>
             </div>
         )
