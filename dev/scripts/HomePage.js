@@ -4,6 +4,7 @@ import SearchTab from "./SearchTab";
 import SongInfo from "./SongInfo";
 import swal from 'sweetalert';
 import axios from 'axios';
+import firebase from './firebase';
 
 class MainPage extends React.Component {
     constructor(){

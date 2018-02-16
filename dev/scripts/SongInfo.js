@@ -1,4 +1,5 @@
 import React from "react";
+import firebase from './firebase';
 
 export default class SongInfo extends React.Component{
     constructor(){
@@ -9,6 +10,39 @@ export default class SongInfo extends React.Component{
         this.addFavourite = this.addFavourite.bind(this);
     }
 
+    componentDidMount(){
+        firebase.database().ref().on("value", (res) => {
+            const userData = res.val();
+            const dataArray = [];
+            //we're taking the original object, the key itself, we're putting inside of the object so that we can grab an easy reference to that value later
+            for(let key in userData){
+                userData[key].key = key;
+                dataArray.push(userData[key])
+            }
+            this.setState({
+                favourites: dataArray
+            })
+            console.log(dataArray);
+        });
+    }
+
+    // addFavourite(artist, songIndex) {
+    //     const fav = {
+    //         artist,
+    //         title: this.props.title[songIndex],
+    //         url: this.props.link[songIndex]
+    //     };
+
+    //     const newFavs = Array.from(this.state.favourites);
+    //     newFavs.push(fav);
+
+    //     this.setState({
+    //         favourites: newFavs
+    //     },()=>{
+    //         console.log(this.state.favourites)
+    //     })
+    // }
+
     addFavourite(artist, songIndex) {
         const fav = {
             artist,
@@ -16,15 +50,14 @@ export default class SongInfo extends React.Component{
             url: this.props.link[songIndex]
         };
 
-        const newFavs = Array.from(this.state.favourites);
-        newFavs.push(fav);
-
-        this.setState({
-            favourites: newFavs
-        },()=>{
-            console.log(this.state.favourites)
-        })
+        // get reference to database
+        const dbRef = firebase.database().ref();
+        //push something into the database
+        dbRef.push(fav);
     }
+
+
+
     
     // addFavourite(e){
     //     e.preventDefault();
