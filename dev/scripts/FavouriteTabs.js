@@ -20,7 +20,7 @@ export default class Favourites extends React.Component{
                                         </div>
                                         <div className="bottomRight">
                                             <li><a href={`${key.url}`}><i className="fas fa-link"></i></a></li>
-                                            <li onClick={event => this.addFavourite(artist, i)}><i className="fas fa-minus"></i></li>
+                                            <li onClick={event => this.props.remove(key.key)}><i className="fas fa-minus"></i></li>
                                         </div>
                                     </div>
                                 </ul>
