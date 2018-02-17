@@ -7,7 +7,7 @@ export default class SongInfo extends React.Component{
         super();
         this.state = {
             favourites: [],
-            loggedIn: false
+            loggedIn: false,
         }
         this.addFavourite = this.addFavourite.bind(this);
     }
@@ -31,6 +31,7 @@ export default class SongInfo extends React.Component{
                 });
             }else{
                 this.setState({
+                    dataArray: [],
                     loggedIn: false
                 })
             }
