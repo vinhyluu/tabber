@@ -64,6 +64,7 @@ export default class SongInfo extends React.Component{
                 <Favourites favourites={this.state.favourites} remove={this.removeFavourite} />
             )
         }else{
+            
             return <h2>Login to add search and add tabs</h2>
         }
     }

@@ -24,12 +24,15 @@ export default class Header extends React.Component {
     componentDidMount(){
         firebase.auth().onAuthStateChanged((user) => {
             if(user){
+                document.querySelector(".searchTabs").style.display = "block"
                 this.setState({
                     loggedIn: true
                 })
             }else{
+                document.querySelector(".searchTabs").style.display = "none"
                 this.setState({
                     loggedIn: false
+                    
                 })
             }
         })
@@ -76,15 +79,15 @@ export default class Header extends React.Component {
         const email = this.userEmail.value;
         const password = this.userPassword.value;
         
-        this.setState({
-            loggedIn: true
-        })
+        // this.setState({
+        //     loggedIn: true
+        // })
         // }, 
         // this.saveToLocal);
         
 
         // when user is logged in, show the searchbar
-        document.querySelector(".searchTabs").style.display = "block";
+        // document.querySelector(".searchTabs").style.display = "block";
 
         firebase.auth()
             .signInWithEmailAndPassword(email, password)
@@ -100,17 +103,17 @@ export default class Header extends React.Component {
         e.preventDefault();
         firebase.auth().signOut();  
         
-        this.setState({
-            loggedIn: false
-        })
-        console.log(this.state.loggedIn);
-        
-        // hide the search bar when user logs out
-        // so if they visit the page again, and they have not signed in
-        // the searchbar will not be visible
-        
+        // this.setState({
+            //     loggedIn: false
+            // })
+            // console.log(this.state.loggedIn);
+            
+            // hide the search bar when user logs out
+            // so if they visit the page again, and they have not signed in
+            // the searchbar will not be visible
+            
         // until they are logged back in
-        document.querySelector(".searchTabs").style.display="none";
+        // document.querySelector(".searchTabs").style.display="none";
     }
 
     render() {
