@@ -15,7 +15,7 @@ export default class SongInfo extends React.Component{
     componentDidMount(){
         firebase.auth().onAuthStateChanged((user) => {
             if(user){
-                firebase.database().ref().on("value", (res) => {
+                firebase.database().ref(`users/${user.uid}/favourites`).on("value", (res) => {
                     const userData = res.val();
                     const dataArray = [];
                     //we're taking the original object, the key itself, we're putting inside of the object so that we can grab an easy reference to that value later
@@ -45,15 +45,26 @@ export default class SongInfo extends React.Component{
         };
 
         // get reference to database
-        const dbRef = firebase.database().ref();
+        const userId = firebase.auth().currentUser.uid;
+        const dbRef = firebase.database().ref(`users/${userId}/favourites`);
         //push something into the database
         dbRef.push(fav);
     }
 
-    removeFavourite(noteId){
-        console.log(noteId);
-        const dbRef = firebase.database().ref(noteId);
+    removeFavourite(cardId) {
+        const userId = firebase.auth().currentUser.uid;
+        const dbRef = firebase.database().ref(`users/${userId}/favourites/${cardId}`);
         dbRef.remove();
+    }
+
+    renderFavourites(){
+        if(this.state.loggedIn){
+            return(
+                <Favourites favourites={this.state.favourites} remove={this.removeFavourite} />
+            )
+        }else{
+            return <h2>Login to add search and add tabs</h2>
+        }
     }
 
     render() {
@@ -82,9 +93,11 @@ export default class SongInfo extends React.Component{
                         )
                     })}
                 </div>
+                
 
                 <div>
-                    <Favourites favourites={this.state.favourites} remove={this.removeFavourite}/>
+                    {this.renderFavourites()}
+                    {/* <Favourites favourites={this.state.favourites} remove={this.removeFavourite}/> */}
                 </div>
             </div>
         )

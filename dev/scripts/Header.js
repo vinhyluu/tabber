@@ -12,6 +12,7 @@ export default class Header extends React.Component {
         this.createUser = this.createUser.bind(this);
         this.showLogin = this.showLogin.bind(this);
         this.loginUser = this.loginUser.bind(this);
+        this.logOut = this.logOut.bind(this);
     }
 
     showCreate(e){
@@ -50,17 +51,28 @@ export default class Header extends React.Component {
         const email = this.userEmail.value;
         const password = this.userPassword.value;
 
+        this.setState({
+            loggedIn: true
+        })
+
         firebase.auth()
             .signInWithEmailAndPassword(email, password)
             .then((res) => {
                 this.showLogin(e);
             })
             .catch((err)=>{
-                alert(err.essage);
+                alert(err.message);
             })
-            this.setState({
-                loggedIn: true
-            })
+        }
+
+    logOut(e){
+        e.preventDefault();
+        firebase.auth().signOut();  
+        
+        this.setState({
+            loggedIn: false
+        })
+        console.log(this.state.loggedIn);
     }
 
     render() {
@@ -68,11 +80,28 @@ export default class Header extends React.Component {
             <div>
                 <div>
                     <nav>
-                        <ul className="mainNav">
-                            <li>Home</li>
-                            <li>Favourite Tabs</li>
-                            <li><a href="" onClick={this.showCreate}>Create Account</a></li>
-                            <li><a href="" onClick={this.showLogin}>Login</a></li>
+                        <ul>
+                        {/* iffy statement */}
+                        {
+                            (() => {
+                                if(this.state.loggedIn){
+                                    return(
+                                        <div className="mainNav">
+                                            <li>Home</li>
+                                            <li>Favourite Tabs</li>
+                                            <li><a href="" onClick={this.logOut}>Logout</a></li>
+                                        </div>
+                                    )
+                                }else{
+                                    return(
+                                        <div className="mainNav">
+                                            <li><a href="" onClick={this.showCreate}>Create Account</a></li>
+                                            <li><a href="" onClick={this.showLogin}>Login</a></li>
+                                        </div>
+                                    )
+                                }
+                            })()
+                        }
                         </ul>
                     </nav>
                 </div>
