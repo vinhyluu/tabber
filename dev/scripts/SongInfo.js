@@ -31,7 +31,7 @@ export default class SongInfo extends React.Component{
                 });
             }else{
                 this.setState({
-                    dataArray: [],
+                    favourites: [],
                     loggedIn: false
                 })
             }
@@ -64,14 +64,14 @@ export default class SongInfo extends React.Component{
                 <Favourites favourites={this.state.favourites} remove={this.removeFavourite} />
             )
         }else{
-            
             return <h2>Login to add search and add tabs</h2>
         }
     }
 
     render() {
-        return (
+        return (   
             <div>
+                {this.state.loggedIn === true ?
                 <div className="songContainerOuter">
                     {this.props.artist.map((artist, i) => {
                         const { link, title } = this.props;
@@ -95,6 +95,9 @@ export default class SongInfo extends React.Component{
                         )
                     })}
                 </div>
+                :
+                //ternary so that when you search as a logged in user, and then logout, the search results don't appear
+                <div></div>}
                 
 
                 <div>
