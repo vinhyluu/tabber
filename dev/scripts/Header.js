@@ -55,6 +55,9 @@ export default class Header extends React.Component {
             loggedIn: true
         })
 
+        // when user is logged in, show the searchbar
+        document.querySelector(".searchTabs").style.display = "block";
+
         firebase.auth()
             .signInWithEmailAndPassword(email, password)
             .then((res) => {
@@ -73,6 +76,12 @@ export default class Header extends React.Component {
             loggedIn: false
         })
         console.log(this.state.loggedIn);
+
+        // hide the search bar when user logs out
+        // so if they visit the page again, and they have not signed in
+        // the searchbar will not be visible
+        // until they are logged back in
+        document.querySelector(".searchTabs").style.display = "none";
     }
 
     render() {
