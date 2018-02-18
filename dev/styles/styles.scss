@@ -322,6 +322,21 @@ ul{
         width: calc(50% - 40px);
         margin: 50px 20px 0 20px; 
     }
+
+    .mainTitle h1{
+        font-size: 17rem;
+    }
+}
+
+@media (max-width : 600px){
+    .mainTitle h1{
+        font-size: 14rem;
+    }
+
+    .mainNav{
+        justify-content: center;
+        text-align: center;
+    }
 }
 
 @media (max-width : 460px){
