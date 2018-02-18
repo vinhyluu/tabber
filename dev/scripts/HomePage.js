@@ -5,6 +5,7 @@ import SongInfo from "./SongInfo";
 import FavouriteTabs from "./FavouriteTabs";
 import swal from 'sweetalert';
 import axios from 'axios';
+import Qs from "qs"
 import firebase from './firebase';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
@@ -127,38 +128,82 @@ class HomePage extends React.Component {
 
     //Search Tab
     searchTab(param){
-        axios.get(`https://www.songsterr.com/a/ra/songs.json?pattern=${param}`)
-            .then(res => {
-                const tabs = res.data;
-                const songTitle = [];
-                const artistName = [];
-                const tabId = [];
+        // axios.get(`https://www.songsterr.com/a/ra/songs.json?pattern=${param}`)
+            // .then(res => {
+            //     const tabs = res.data;
+            //     const songTitle = [];
+            //     const artistName = [];
+            //     const tabId = [];
 
-                // console.log(artistName);
-                // console.log(songTitle);
-                // console.log(tabId);
+            //     // console.log(artistName);
+            //     // console.log(songTitle);
+            //     // console.log(tabId);
 
-                for(let key in tabs){
-                    for(let data in tabs[key]){
+            //     for(let key in tabs){
+            //         for(let data in tabs[key]){
 
-                        const artist = tabs[key].artist.name.toUpperCase();
-                        const song = tabs[key].title.toUpperCase();
-                        const link = `https://www.songsterr.com/a/wa/bestMatchForQueryString?s=${song}&a=${artist}`;
-                        const linkNoSpace = link.replace(/\s+/g, "");
+            //             const artist = tabs[key].artist.name.toUpperCase();
+            //             const song = tabs[key].title.toUpperCase();
+            //             const link = `https://www.songsterr.com/a/wa/bestMatchForQueryString?s=${song}&a=${artist}`;
+            //             const linkNoSpace = link.replace(/\s+/g, "");
 
-                        // console.log(linkNoSpace);
-                        // console.log(link);
-                        // console.log(song);
+            //             // console.log(linkNoSpace);
+            //             // console.log(link);
+            //             // console.log(song);
 
-                        if(param == artist || param == song){
-                            artistName.push(artist);
-                            songTitle.push(song);
-                            tabId.push(linkNoSpace);
-                            // tabId.push(`http://www.songsterr.com/a/wa/song?id=${link}`);
-                            break;
-                        }
+            //             if(param == artist || param == song){
+            //                 artistName.push(artist);
+            //                 songTitle.push(song);
+            //                 tabId.push(linkNoSpace);
+            //                 // tabId.push(`http://www.songsterr.com/a/wa/song?id=${link}`);
+            //                 break;
+            //             }
+            //         }
+            //     }
+
+        axios({
+            method: "GET",
+            url: "https://proxy.hackeryou.com",
+            dataResponse: "json",
+            paramsSerializer: function(params){
+                return Qs.stringify(params, { arrayFormat: 'brackets' })
+            },
+            params: {
+                reqUrl: `https://www.songsterr.com/a/ra/songs.json?pattern=${param}`
+            },
+            xmlToJson: false
+        }).then(res => {
+            const tabs = res.data;
+            const songTitle = [];
+            const artistName = [];
+            const tabId = [];
+
+            // console.log(artistName);
+            // console.log(songTitle);
+            // console.log(tabId);
+
+            for (let key in tabs) {
+                for (let data in tabs[key]) {
+
+                    const artist = tabs[key].artist.name.toUpperCase();
+                    const song = tabs[key].title.toUpperCase();
+                    const link = `https://www.songsterr.com/a/wa/bestMatchForQueryString?s=${song}&a=${artist}`;
+                    const linkNoSpace = link.replace(/\s+/g, "");
+
+                    // console.log(linkNoSpace);
+                    // console.log(link);
+                    // console.log(song);
+
+                    if (param == artist || param == song) {
+                        artistName.push(artist);
+                        songTitle.push(song);
+                        tabId.push(linkNoSpace);
+                        // tabId.push(`http://www.songsterr.com/a/wa/song?id=${link}`);
+                        break;
                     }
                 }
+            }
+    
 
                 this.setState({
                     artistName,
@@ -240,8 +285,8 @@ class HomePage extends React.Component {
                                                         } else {
                                                             return (
                                                                 <div className="mainNav">
-                                                                    <li className="navLink"><a href="" onClick={this.showCreate}>Create Account</a></li>
-                                                                    <li className="navLink"><a href="" onClick={this.showLogin}>Login</a></li>
+                                                                    <li className="navLink" onClick={this.showCreate}><Link to="/home">Create Account</Link></li>
+                                                                    <li className="navLink" onClick={this.showLogin}><Link to="/home">Login</Link></li>
                                                                 </div>
                                                             )
                                                         }
