@@ -8,6 +8,12 @@ import axios from 'axios';
 import firebase from './firebase';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
+// const searchTab = () => (
+//     <SearchTab
+//         search={this.handleSubmit}
+//         value={this.handleChange} />
+// );
+
 class HomePage extends React.Component {
     constructor(){
         super();
@@ -32,12 +38,12 @@ class HomePage extends React.Component {
     componentDidMount() {
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
-                document.querySelector(".searchTabs").style.display = "block"
+                document.getElementById("searchBar").style.display = "block"
                 this.setState({
                     loggedIn: true
                 })
-            } else {
-                document.querySelector(".searchTabs").style.display = "none"
+            }else{
+                document.getElementById("searchBar").style.display = "none"
                 this.setState({
                     loggedIn: false
 
@@ -196,8 +202,39 @@ class HomePage extends React.Component {
         })
     }
 
+    removeTab(){
+        const location = window.location.pathname;
+        console.log(location);
+        
+        if(location === "/favouritetabs"){
+            document.querySelector(".searchTabs").style.display = "none"
+        }
+    }
+
+    addTab(){
+        const location = window.location.pathname;
+        
+        if(location === "/home"){
+            document.querySelector(".searchTabs").style.display = "block"
+        }
+    }
 
     render(){
+
+        // const searchTab = () => (
+        //     location === "favouritetabs" ? document.querySelector(".searchTabs").style.display = "none" : null
+        // )
+       
+    //     const location = window.location.pathname;
+
+    //     if(location === "favouritetabs"){
+    //     const searchTab = () => (
+    //         <SearchTab search={this.handleSubmit} value={this.handleChange} />
+    //     );
+    // }
+    //     }
+    
+
         return(
             <Router>
                 <div>
@@ -213,8 +250,8 @@ class HomePage extends React.Component {
                                                         if (this.state.loggedIn === true) {
                                                             return (
                                                                 <div className="mainNav">
-                                                                    <li><Link to="/home">Home</Link></li>
-                                                                    <li><Link to="/favouritetabs">Favourite Tabs</Link></li>
+                                                                    <li onClick={this.addTab}><Link to="/home">Home</Link></li>
+                                                                    <li onClick={this.removeTab}><Link to="/favouritetabs">Favourite Tabs</Link></li>
                                                                     {/* <Route exact path="/Home" component={HomePage} />
                                                                     <Route exact path="/favouritetabs" component={FavouriteTabs} /> */}
                                                                     <li><a href="" onClick={this.logOut}>Logout</a></li>
@@ -280,13 +317,16 @@ class HomePage extends React.Component {
                             <SearchTab search={this.handleSubmit} value={this.handleChange}/>
                         </div>
                     </div>
-                    
+
                     <Switch className="wrapper2 songContainer">
                         <Route exact path="/home" render={props => <SongInfo {...props} artist={this.state.artistName} title={this.state.songTitle} link={this.state.tabId} />} />
                         <Route exact path="/favouritetabs" component={FavouriteTabs} />} />
                     </Switch>
-                 
 
+                    {/* <Switch>
+                        <Route exact path="/favouritetabs" component={null} />
+                        <Route component={searchTab} />
+                    </Switch> */}
                     {/* <div className="wrapper2 songContainer">
                         <SongInfo artist={this.state.artistName} title={this.state.songTitle} link={this.state.tabId} />
                     </div> */}
@@ -295,5 +335,9 @@ class HomePage extends React.Component {
         )
     }
 }
+
+
+
+
 
 export default HomePage;
