@@ -52,21 +52,21 @@ export default class SongInfo extends React.Component{
         dbRef.push(fav);
     }
 
-    removeFavourite(cardId) {
-        const userId = firebase.auth().currentUser.uid;
-        const dbRef = firebase.database().ref(`users/${userId}/favourites/${cardId}`);
-        dbRef.remove();
-    }
+    // removeFavourite(cardId) {
+    //     const userId = firebase.auth().currentUser.uid;
+    //     const dbRef = firebase.database().ref(`users/${userId}/favourites/${cardId}`);
+    //     dbRef.remove();
+    // }
 
-    renderFavourites(){
-        if(this.state.loggedIn){
-            return(
-                <Favourites favourites={this.state.favourites} remove={this.removeFavourite} />
-            )
-        }else{
-            return <h2>Login to add search and add tabs</h2>
-        }
-    }
+    // renderFavourites(){
+    //     if(this.state.loggedIn){
+    //         return(
+    //             <Favourites favourites={this.state.favourites} remove={this.removeFavourite} />
+    //         )
+    //     }else{
+    //         return <h2>Login to add search and add tabs</h2>
+    //     }
+    // }
 
     render() {
         return (   
@@ -97,13 +97,7 @@ export default class SongInfo extends React.Component{
                 </div>
                 :
                 //ternary so that when you search as a logged in user, and then logout, the search results don't appear
-                <div></div>}
-                
-
-                <div>
-                    {this.renderFavourites()}
-                    {/* <Favourites favourites={this.state.favourites} remove={this.removeFavourite}/> */}
-                </div>
+                <div className="createLogin">Tabber is an app built for guitarists to search for tablature using the Songsterr API. You can also save and view tabs for later!</div>}
             </div>
         )
     }
