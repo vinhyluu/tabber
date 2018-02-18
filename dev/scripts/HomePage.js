@@ -1,4 +1,5 @@
 import React from "react";
+import App from "./app";
 import SearchTab from "./SearchTab";
 import SongInfo from "./SongInfo";
 import FavouriteTabs from "./FavouriteTabs";
@@ -212,9 +213,9 @@ class HomePage extends React.Component {
                                                         if (this.state.loggedIn === true) {
                                                             return (
                                                                 <div className="mainNav">
-                                                                    <li><Link to="/Home">Home</Link></li>
+                                                                    <li><Link to="/home">Home</Link></li>
                                                                     <li><Link to="/favouritetabs">Favourite Tabs</Link></li>
-                                                                    {/* <Route exact path="/" component={HomePage} />
+                                                                    {/* <Route exact path="/Home" component={HomePage} />
                                                                     <Route exact path="/favouritetabs" component={FavouriteTabs} /> */}
                                                                     <li><a href="" onClick={this.logOut}>Logout</a></li>
                                                                 </div>
@@ -274,20 +275,21 @@ class HomePage extends React.Component {
                         </div>
                     </div>
 
-                    {/* <Switch>
-                        <Route exact path="/" render={props => <HomePage {...props} userkey={this.props.userkey} />} />
-                    </Switch> */}
-                 
                     <div>
                         <div>
                             <SearchTab search={this.handleSubmit} value={this.handleChange}/>
                         </div>
                     </div>
+                    
+                    <Switch className="wrapper2 songContainer">
+                        <Route exact path="/home" render={props => <SongInfo {...props} artist={this.state.artistName} title={this.state.songTitle} link={this.state.tabId} />} />
+                        <Route exact path="/favouritetabs" component={FavouriteTabs} />} />
+                    </Switch>
+                 
 
-                    <div className="wrapper2 songContainer">
+                    {/* <div className="wrapper2 songContainer">
                         <SongInfo artist={this.state.artistName} title={this.state.songTitle} link={this.state.tabId} />
-                        {/* <FavouriteTabs /> */}
-                    </div>
+                    </div> */}
                 </div>
             </Router>
         )
