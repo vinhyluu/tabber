@@ -47,6 +47,11 @@ ul{
     font-size: 2rem;
 }
 
+.navLink, .navLink a{
+    text-decoration: none;
+    color: white;
+}
+
 .mainTitle{
     height: 500px;
     display: flex;
@@ -62,7 +67,7 @@ ul{
 
 //Search Bar
 .searchTab{
-    border: 1px solid rgb(167, 167, 167);
+    border-bottom: 1px solid rgb(167, 167, 167);
 }
 
 .searchTabs{
@@ -71,6 +76,7 @@ ul{
     display: table;
     margin: 0 auto;
     border: none;
+    border-bottom: 5px solid rgb(167, 167, 167);
     // display: none;
 }
 
@@ -180,43 +186,106 @@ ul{
     cursor: pointer;
 }
 
-// Login modal
+//Create Login Page
+.createLogin{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 50px 100px 50px 100px;
+    font-size: 2rem;
+    color: rgb(167, 167, 167);
+}
+
+.createLogin p:nth-child(1){
+    margin-bottom: 30px;
+}
+
+.fa-music{
+    margin-top: 80px;
+    font-size: 8rem;
+    color: rgb(111, 109, 109)
+}
+
+// Login modal\
+.login{
+    padding: 100px;
+    background: grey;
+}
+.emailContainer, .passwordContainer{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
 .overlay {
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4); }
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.598); 
+}
 
 .modal {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: absolute;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  top: 0;
-  width: 35%;
-  margin: 0 auto; }
-  .modal input[type=text], .modal input[type=password] {
-    width: 100%; }
-  .modal label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    margin: 0 auto; 
+}
+
+.modal input[type=password], .modal input[type=email] {
+    width: 300px;
+    height: 25px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.modal label {
     color: white;
     font-size: 1.7rem;
     text-transform: uppercase;
-    padding: 10px;
-    letter-spacing: 0.4rem; }
+    padding: 4px 0 4px 0;
+    letter-spacing: 0.4rem; 
+}
 
 .modal, .overlay {
-  visibility: hidden;
-  opacity: 0;
-  transition: all 0.3s ease;
-  position: absolute; }
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease;
+    position: absolute; 
+}
 
 .modal.show {
-  z-index: 1; }
+    z-index: 1; 
+}
 
 .modal.show, .overlay.show {
-  visibility: visible;
-  opacity: 1; }
+    visibility: visible;
+    opacity: 1; 
+}
+
+.closeModal, .loginClose input{
+    text-transform: uppercase;
+}
+
+.loginClose{
+    padding-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.loginClose input, .loginClose button{
+    background: #FF6666;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 7px;
+    font-size: 1.3rem;
+}

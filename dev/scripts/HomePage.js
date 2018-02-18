@@ -8,12 +8,6 @@ import axios from 'axios';
 import firebase from './firebase';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
-// const searchTab = () => (
-//     <SearchTab
-//         search={this.handleSubmit}
-//         value={this.handleChange} />
-// );
-
 class HomePage extends React.Component {
     constructor(){
         super();
@@ -39,14 +33,15 @@ class HomePage extends React.Component {
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 document.getElementById("searchBar").style.display = "block"
+                document.querySelector(".searchTab").style.borderBottom = "1px solid rgb(167, 167, 167)"
                 this.setState({
                     loggedIn: true
                 })
             }else{
                 document.getElementById("searchBar").style.display = "none"
+                document.querySelector(".searchTab").style.borderBottom = "none"
                 this.setState({
                     loggedIn: false
-
                 })
             }
         })
@@ -208,6 +203,7 @@ class HomePage extends React.Component {
         
         if(location === "/favouritetabs"){
             document.querySelector(".searchTabs").style.display = "none"
+            document.querySelector(".searchTab").style.borderBottom ="none"
         }
     }
 
@@ -216,25 +212,11 @@ class HomePage extends React.Component {
         
         if(location === "/home"){
             document.querySelector(".searchTabs").style.display = "block"
+            document.querySelector(".searchTab").style.borderBottom = "1px solid rgb(167, 167, 167)"
         }
     }
 
     render(){
-
-        // const searchTab = () => (
-        //     location === "favouritetabs" ? document.querySelector(".searchTabs").style.display = "none" : null
-        // )
-       
-    //     const location = window.location.pathname;
-
-    //     if(location === "favouritetabs"){
-    //     const searchTab = () => (
-    //         <SearchTab search={this.handleSubmit} value={this.handleChange} />
-    //     );
-    // }
-    //     }
-    
-
         return(
             <Router>
                 <div>
@@ -250,18 +232,16 @@ class HomePage extends React.Component {
                                                         if (this.state.loggedIn === true) {
                                                             return (
                                                                 <div className="mainNav">
-                                                                    <li onClick={this.addTab}><Link to="/home">Home</Link></li>
-                                                                    <li onClick={this.removeTab}><Link to="/favouritetabs">Favourite Tabs</Link></li>
-                                                                    {/* <Route exact path="/Home" component={HomePage} />
-                                                                    <Route exact path="/favouritetabs" component={FavouriteTabs} /> */}
-                                                                    <li><a href="" onClick={this.logOut}>Logout</a></li>
+                                                                    <li onClick={this.addTab}><Link to="/home" className="navLink">Home</Link></li>
+                                                                    <li onClick={this.removeTab}><Link to="/favouritetabs" className="navLink">Favourite Tabs</Link></li>
+                                                                    <li className="navLink" onClick={this.logOut}><Link to="/home">Logout</Link></li>
                                                                 </div>
                                                             )
                                                         } else {
                                                             return (
                                                                 <div className="mainNav">
-                                                                    <li><a href="" onClick={this.showCreate}>Create Account</a></li>
-                                                                    <li><a href="" onClick={this.showLogin}>Login</a></li>
+                                                                    <li className="navLink"><a href="" onClick={this.showCreate}>Create Account</a></li>
+                                                                    <li className="navLink"><a href="" onClick={this.showLogin}>Login</a></li>
                                                                 </div>
                                                             )
                                                         }
@@ -277,34 +257,41 @@ class HomePage extends React.Component {
                                     </div>
 
                                     <div className="loginModal modal" ref={ref => this.loginModal = ref}>
-                                        <form action="" onSubmit={this.loginUser}>
-                                            <label htmlFor="email">email</label>
-                                            <input type="email" name="email" ref={ref => this.userEmail = ref} />
-                                            <label htmlFor="password">password</label>
-                                            <input type="password" name="password" ref={ref => this.userPassword = ref} />
-                                            <input type="submit" value="Login" />
-                                            <button onClick={this.showLogin}>close</button>
+                                        <form className="login" action="" onSubmit={this.loginUser}>
+                                            <div className="emailContainer">
+                                                <label htmlFor="email">email</label>
+                                                <input type="email" name="email" ref={ref => this.userEmail = ref} />
+                                            </div>
+                                            <div className="passwordContainer">
+                                                <label htmlFor="password">password</label>
+                                                <input type="password" name="password" ref={ref => this.userPassword = ref} />
+                                            </div>
+                                            <div className="loginClose">
+                                                <input type="submit" value="login" />
+                                                <button onClick={this.showLogin} className="closeModal">close</button>
+                                            </div>
                                         </form>
                                     </div>
 
                                     <div className="overlay" ref={ref => this.overlay = ref}></div>
+
                                     <div className="createUserModal modal" ref={ref => this.createUserModal = ref}>
-                                        <form action="" onSubmit={this.createUser}>
-                                            <div>
+                                        <form className="login" action="" onSubmit={this.createUser}>
+                                            <div className="emailContainer">
                                                 <label htmlFor="createEmail">email</label>
                                                 <input type="email" name="createEmail" ref={ref => this.createEmail = ref} onChange={this.onChange} />
                                             </div>
-                                            <div>
+                                            <div className="passwordContainer">
                                                 <label htmlFor="createPassword">password</label>
                                                 <input type="password" name="createPassword" ref={ref => this.createPassword = ref} onChange={this.onChange} />
                                             </div>
-                                            <div>
+                                            <div className="passwordContainer">
                                                 <label htmlFor="confirmPassword">confirm Password</label>
                                                 <input type="password" name="confirmPassword" ref={ref => this.confirmPassword = ref} onChange={this.onChange} />
                                             </div>
-                                            <div>
+                                            <div className="loginClose">
                                                 <input type="Submit" defaultValue="create" onChange={this.onChange} />
-                                                <button onClick={this.showCreate}>close</button>
+                                                <button onClick={this.showCreate} className="closeModal">close</button>
                                             </div>
                                         </form>
                                     </div>
@@ -330,7 +317,18 @@ class HomePage extends React.Component {
                     {/* <div className="wrapper2 songContainer">
                         <SongInfo artist={this.state.artistName} title={this.state.songTitle} link={this.state.tabId} />
                     </div> */}
+
+                    {this.state.loggedIn===false ?
+                    <div className="createLogin"> 
+                        <p>Tabber is an app built for guitarists to search for tablature using the Songsterr API. You can also save and view tabs for later!</p>
+                        <p>Create an account to get started!</p>
+                        <span><i className="fas fa-music"></i></span>
+                    </div>
+                    :
+                    <div></div>}
                 </div>
+
+                
             </Router>
         )
     }

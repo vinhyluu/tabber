@@ -97,7 +97,7 @@ export default class SongInfo extends React.Component{
                 </div>
                 :
                 //ternary so that when you search as a logged in user, and then logout, the search results don't appear
-                <div className="createLogin">Tabber is an app built for guitarists to search for tablature using the Songsterr API. You can also save and view tabs for later!</div>}
+                <div></div>}
             </div>
         )
     }
