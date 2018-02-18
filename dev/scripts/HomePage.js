@@ -212,12 +212,10 @@ class HomePage extends React.Component {
                                                         if (this.state.loggedIn === true) {
                                                             return (
                                                                 <div className="mainNav">
-                                                                    <li>Home</li>
-                                                                    <li>Favourite Tabs</li>
-                                                                    <li><Link to="/">Home</Link></li>
+                                                                    <li><Link to="/Home">Home</Link></li>
                                                                     <li><Link to="/favouritetabs">Favourite Tabs</Link></li>
-                                                                    <Route exact path="/" component={HomePage} />
-                                                                    <Route exact path="/favouritetabs" component={FavouriteTabs} />
+                                                                    {/* <Route exact path="/" component={HomePage} />
+                                                                    <Route exact path="/favouritetabs" component={FavouriteTabs} /> */}
                                                                     <li><a href="" onClick={this.logOut}>Logout</a></li>
                                                                 </div>
                                                             )
@@ -280,15 +278,15 @@ class HomePage extends React.Component {
                         <Route exact path="/" render={props => <HomePage {...props} userkey={this.props.userkey} />} />
                     </Switch> */}
                  
-                    {/* <div>
+                    <div>
                         <div>
                             <SearchTab search={this.handleSubmit} value={this.handleChange}/>
                         </div>
-                    </div> */}
+                    </div>
 
                     <div className="wrapper2 songContainer">
                         <SongInfo artist={this.state.artistName} title={this.state.songTitle} link={this.state.tabId} />
-                        <FavouriteTabs />
+                        {/* <FavouriteTabs /> */}
                     </div>
                 </div>
             </Router>
