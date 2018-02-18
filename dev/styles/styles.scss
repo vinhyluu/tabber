@@ -317,6 +317,12 @@ ul{
     }
 }
 
+@media (max-width : 773px){
+    .createLogin {
+        padding: 50px 50px 50px 50px;
+    }
+}
+
 @media (max-width : 700px){
     .songContainerInner{
         width: calc(50% - 40px);
@@ -327,6 +333,13 @@ ul{
         font-size: 17rem;
     }
 }
+
+@media (max-width : 773px){
+    .createLogin {
+        padding: 50px 30px 50px 30px;
+    }
+}
+
 
 @media (max-width : 600px){
     .mainTitle h1{
