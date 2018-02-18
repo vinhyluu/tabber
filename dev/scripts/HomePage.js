@@ -127,7 +127,7 @@ class HomePage extends React.Component {
 
     //Search Tab
     searchTab(param){
-        axios.get(`http://www.songsterr.com/a/ra/songs.json?pattern=${param}`)
+        axios.get(`https://www.songsterr.com/a/ra/songs.json?pattern=${param}`)
             .then(res => {
                 const tabs = res.data;
                 const songTitle = [];
@@ -143,7 +143,7 @@ class HomePage extends React.Component {
 
                         const artist = tabs[key].artist.name.toUpperCase();
                         const song = tabs[key].title.toUpperCase();
-                        const link = `http://www.songsterr.com/a/wa/bestMatchForQueryString?s=${song}&a=${artist}`;
+                        const link = `https://www.songsterr.com/a/wa/bestMatchForQueryString?s=${song}&a=${artist}`;
                         const linkNoSpace = link.replace(/\s+/g, "");
 
                         // console.log(linkNoSpace);
