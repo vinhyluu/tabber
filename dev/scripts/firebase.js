@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+
 const config = {
     apiKey: "AIzaSyCe19OAabaDgBSA2KwrtFyFmV0s_zKly9o",
     authDomain: "tabber-8aa84.firebaseapp.com",
@@ -11,4 +12,3 @@ firebase.initializeApp(config);
 
 export default firebase;
 
-// "auth != null"

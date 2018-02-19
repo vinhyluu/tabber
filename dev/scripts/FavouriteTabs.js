@@ -36,12 +36,6 @@ export default class Favourites extends React.Component{
             } 
         })
     }
-    // componentDidMount(){
-    //     const userId = firebase.auth().currentUser.uid;
-    //     firebase.database().ref(`users/${userId}/favourites`).on("value", (res) => {
-    //         console.log(res);
-    //     })
-    // }
 
     removeFavourite(cardId) {
         const userId = firebase.auth().currentUser.uid;

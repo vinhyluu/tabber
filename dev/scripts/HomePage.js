@@ -80,6 +80,7 @@ class HomePage extends React.Component {
         this.loginModal.classList.toggle("show");
     }
 
+    // Leaving this here. I didn't realize that I could use firebase.auth.onAuthStateChanged in this component as well so I was trying to store the logged in state into local storage. Got close, but then read it wasn't the best idea especially if it was in production code. Local storage is pretty cool though!
     // saveToLocal(){
     //     const local = this.state.loggedIn;
     //     localStorage.setItem("loggedIn", JSON.stringify(local));
@@ -95,10 +96,6 @@ class HomePage extends React.Component {
         // })
         // }, 
         // this.saveToLocal);
-
-
-        // when user is logged in, show the searchbar
-        // document.querySelector(".searchTabs").style.display = "block";
 
         firebase.auth()
             .signInWithEmailAndPassword(email, password)
@@ -120,54 +117,10 @@ class HomePage extends React.Component {
             tabId: [],
             currentSearch: ""
         })
-        // this.setState({
-        //     loggedIn: false
-        // })
-        // console.log(this.state.loggedIn);
-
-        // hide the search bar when user logs out
-        // so if they visit the page again, and they have not signed in
-        // the searchbar will not be visible
-
-        // until they are logged back in
-        // document.querySelector(".searchTabs").style.display="none";
     }
 
     //Search Tab
     searchTab(param){
-        // axios.get(`https://www.songsterr.com/a/ra/songs.json?pattern=${param}`)
-            // .then(res => {
-            //     const tabs = res.data;
-            //     const songTitle = [];
-            //     const artistName = [];
-            //     const tabId = [];
-
-            //     // console.log(artistName);
-            //     // console.log(songTitle);
-            //     // console.log(tabId);
-
-            //     for(let key in tabs){
-            //         for(let data in tabs[key]){
-
-            //             const artist = tabs[key].artist.name.toUpperCase();
-            //             const song = tabs[key].title.toUpperCase();
-            //             const link = `https://www.songsterr.com/a/wa/bestMatchForQueryString?s=${song}&a=${artist}`;
-            //             const linkNoSpace = link.replace(/\s+/g, "");
-
-            //             // console.log(linkNoSpace);
-            //             // console.log(link);
-            //             // console.log(song);
-
-            //             if(param == artist || param == song){
-            //                 artistName.push(artist);
-            //                 songTitle.push(song);
-            //                 tabId.push(linkNoSpace);
-            //                 // tabId.push(`http://www.songsterr.com/a/wa/song?id=${link}`);
-            //                 break;
-            //             }
-            //         }
-            //     }
-
         axios({
             method: "GET",
             url: "https://proxy.hackeryou.com",
@@ -185,10 +138,6 @@ class HomePage extends React.Component {
             const artistName = [];
             const tabId = [];
 
-            // console.log(artistName);
-            // console.log(songTitle);
-            // console.log(tabId);
-
             for (let key in tabs) {
                 for (let data in tabs[key]) {
 
@@ -197,15 +146,11 @@ class HomePage extends React.Component {
                     const link = `https://www.songsterr.com/a/wa/bestMatchForQueryString?s=${song}&a=${artist}`;
                     const linkNoSpace = link.replace(/\s+/g, "");
 
-                    // console.log(linkNoSpace);
-                    // console.log(link);
-                    // console.log(song);
-
                     if (param == artist || param == song) {
                         artistName.push(artist);
                         songTitle.push(song);
                         tabId.push(linkNoSpace);
-                        // tabId.push(`http://www.songsterr.com/a/wa/song?id=${link}`);
+                        //prevent for in loop from repeating the same results
                         break;
                     }
                 }
@@ -216,6 +161,7 @@ class HomePage extends React.Component {
                     tabId,
                 })
 
+                //function for empty search results
                 function isEmpty(obj) {
                     for (const key in obj) {
                         if (obj.hasOwnProperty(key))
@@ -223,11 +169,14 @@ class HomePage extends React.Component {
                     }
                     return true;
                 }
-
+                //if there are no values in the artistName array, return false
                 if (isEmpty(artistName)) {
                     swal("Sorry!", "There is no tab for that song. Please try again.", "warning");
                 }
-            })
+
+            }).catch(function (error) {
+                console.log(error);
+            });
         }
 
     handleChange(e){
@@ -236,7 +185,6 @@ class HomePage extends React.Component {
         this.setState({
             currentSearch: currentSearchValue
         })
-        // console.log(currentSearchValue);
     }
 
     handleSubmit(e){
@@ -282,7 +230,7 @@ class HomePage extends React.Component {
                                                         if (this.state.loggedIn === true) {
                                                             return (
                                                                 <div className="mainNav">
-                                                                    <li onClick={this.addTab}><Link to="/home" className="navLink">Home</Link></li>
+                                                                    <li onClick={this.addTab}><Link to="/home" className="navLink goHome">Home</Link></li>
                                                                     <li onClick={this.removeTab}><Link to="/favouritetabs" className="navLink">Favourite Tabs</Link></li>
                                                                     <li className="navLink" onClick={this.logOut}><Link to="/home">Logout</Link></li>
                                                                 </div>
@@ -317,7 +265,7 @@ class HomePage extends React.Component {
                                                 <input type="password" name="password" ref={ref => this.userPassword = ref} />
                                             </div>
                                             <div className="loginClose">
-                                                <input type="submit" value="login" />
+                                                <input type="submit" value="login" className="loginButton"/>
                                                 <button onClick={this.showLogin} className="closeModal">close</button>
                                             </div>
                                         </form>
@@ -326,7 +274,7 @@ class HomePage extends React.Component {
                                     <div className="overlay" ref={ref => this.overlay = ref}></div>
 
                                     <div className="createUserModal modal" ref={ref => this.createUserModal = ref}>
-                                        <form className="login" action="" onSubmit={this.createUser}>
+                                        <form className="login createUser" action="" onSubmit={this.createUser}>
                                             <div className="emailContainer">
                                                 <label htmlFor="createEmail">email</label>
                                                 <input type="email" name="createEmail" ref={ref => this.createEmail = ref} onChange={this.onChange} />
@@ -340,7 +288,7 @@ class HomePage extends React.Component {
                                                 <input type="password" name="confirmPassword" ref={ref => this.confirmPassword = ref} onChange={this.onChange} />
                                             </div>
                                             <div className="loginClose">
-                                                <input type="Submit" defaultValue="create" onChange={this.onChange} />
+                                                <input type="Submit" defaultValue="create" onChange={this.onChange} className="createButton"/>
                                                 <button onClick={this.showCreate} className="closeModal">close</button>
                                             </div>
                                         </form>
@@ -360,32 +308,20 @@ class HomePage extends React.Component {
                         <Route exact path="/favouritetabs" component={FavouriteTabs} />} />
                     </Switch>
 
-                    {/* <Switch>
-                        <Route exact path="/favouritetabs" component={null} />
-                        <Route component={searchTab} />
-                    </Switch> */}
-                    {/* <div className="wrapper2 songContainer">
-                        <SongInfo artist={this.state.artistName} title={this.state.songTitle} link={this.state.tabId} />
-                    </div> */}
-
+                    {/* If the user is logged out, display application introduction */}
                     {this.state.loggedIn===false ?
                     <div className="createLogin"> 
-                        <p>Tabber is an app built for guitarists to search for tablature using the Songsterr API. You can also save and view tabs for later!</p>
+                        <p>Tabber is an app built by a guitarist for guitarists!</p>
+                        <p>Search for guitar tabs, click the <i className="fas fa-plus"></i> button to add to your favourite tabs, and click <i className="fas fa-minus"></i> to remove them.</p>
                         <p>Create an account to get started!</p>
                         <span><i className="fas fa-music"></i></span>
                     </div>
                     :
                     <div></div>}
-                </div>
-
-                
+                </div>    
             </Router>
         )
     }
 }
-
-
-
-
 
 export default HomePage;

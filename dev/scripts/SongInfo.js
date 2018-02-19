@@ -18,7 +18,7 @@ export default class SongInfo extends React.Component{
                 firebase.database().ref(`users/${user.uid}/favourites`).on("value", (res) => {
                     const userData = res.val();
                     const dataArray = [];
-                    //we're taking the original object, the key itself, we're putting inside of the object so that we can grab an easy reference to that value later
+                    //taking the original object, the key itself, we're putting inside of the object to grab for reference later
                     for(let key in userData){
                         userData[key].key = key;
                         dataArray.push(userData[key])
@@ -27,7 +27,6 @@ export default class SongInfo extends React.Component{
                         favourites: dataArray,
                         loggedIn: true
                     })
-                    // console.log(dataArray);
                 });
             }else{
                 this.setState({
@@ -44,29 +43,12 @@ export default class SongInfo extends React.Component{
             title: this.props.title[songIndex],
             url: this.props.link[songIndex]
         };
-
         // get reference to database
         const userId = firebase.auth().currentUser.uid;
         const dbRef = firebase.database().ref(`users/${userId}/favourites`);
-        //push something into the database
+        //push into the database
         dbRef.push(fav);
     }
-
-    // removeFavourite(cardId) {
-    //     const userId = firebase.auth().currentUser.uid;
-    //     const dbRef = firebase.database().ref(`users/${userId}/favourites/${cardId}`);
-    //     dbRef.remove();
-    // }
-
-    // renderFavourites(){
-    //     if(this.state.loggedIn){
-    //         return(
-    //             <Favourites favourites={this.state.favourites} remove={this.removeFavourite} />
-    //         )
-    //     }else{
-    //         return <h2>Login to add search and add tabs</h2>
-    //     }
-    // }
 
     render() {
         return (   
