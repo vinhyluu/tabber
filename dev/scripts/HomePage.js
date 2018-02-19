@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react";
 import App from "./app";
 import SearchTab from "./SearchTab";
 import SongInfo from "./SongInfo";
@@ -113,6 +114,12 @@ class HomePage extends React.Component {
         e.preventDefault();
         firebase.auth().signOut();
 
+        this.setState({
+            artistName: [],
+            songTitle: [],
+            tabId: [],
+            currentSearch: ""
+        })
         // this.setState({
         //     loggedIn: false
         // })
@@ -203,8 +210,6 @@ class HomePage extends React.Component {
                     }
                 }
             }
-    
-
                 this.setState({
                     artistName,
                     songTitle,
