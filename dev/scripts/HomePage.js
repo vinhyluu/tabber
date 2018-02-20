@@ -103,7 +103,7 @@ class HomePage extends React.Component {
             })
             .catch((err) => {
                 console.log(err.message);
-                swal("Error!", "Password incorrect", "warning");
+                swal("Error!", "Password incorrect.", "warning");
             })
     }
 
