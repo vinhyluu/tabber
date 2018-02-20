@@ -68,7 +68,7 @@ export default class SongInfo extends React.Component{
                                             <li>{title[i]}</li>
                                         </div>
                                         <div className="bottomRight">
-                                            <li><a href={`${link[i]}`}><i className="fas fa-link"></i></a></li>
+                                            <li><a href={`${link[i]}`} target="_blank"><i className="fas fa-link"></i></a></li>
                                             <li onClick={event => this.addFavourite(artist, i)}><i className="fas fa-plus"></i></li>
                                         </div>
                                     </div>
