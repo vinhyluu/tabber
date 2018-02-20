@@ -17,7 +17,6 @@ export default class Favourites extends React.Component{
                     const userData = res.val();
                     const dataArray = [];
 
-                    console.log(userData);
                     for(let key in userData){
                         userData[key].key = key;
                         dataArray.push(userData[key]);

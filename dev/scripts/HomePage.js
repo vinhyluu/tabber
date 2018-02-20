@@ -49,8 +49,7 @@ class HomePage extends React.Component {
         })
     }
 
-    showCreate(e) {
-        e.preventDefault();
+    showCreate() {
         this.overlay.classList.toggle("show");
         this.createUserModal.classList.toggle("show");
     }
@@ -67,10 +66,10 @@ class HomePage extends React.Component {
                     this.showCreate(e);
                 })
                 .catch((err) => {
-                    alert(err.message)
+                    console.log(err.message)
                 })
         } else {
-            alert("Passwords Must Match")
+            swal("Error!", "Passwords must match.", "warning");
         }
     }
 
@@ -103,7 +102,8 @@ class HomePage extends React.Component {
                 this.showLogin(e);
             })
             .catch((err) => {
-                alert(err.message);
+                console.log(err.message);
+                swal("Error!", "Password incorrect", "warning");
             })
     }
 
