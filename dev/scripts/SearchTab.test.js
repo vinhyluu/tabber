@@ -8,7 +8,7 @@ configure({ adapter: new Adapter() });
 
 //YAY my first ever test case!
 describe("<SearchTab />", () => { 
-    it("Should include a div <div>", ()=>{
+    it("Should include a searchTabs div with className searchTabs and id searchBar", ()=>{
         const wrapper = shallow((
             <div className="searchTabs" id="searchBar"></div>
         ));
